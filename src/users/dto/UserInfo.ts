@@ -1,4 +1,5 @@
 export class UserInfo {
+  id: number;
   email: string;
   name: string;
 }

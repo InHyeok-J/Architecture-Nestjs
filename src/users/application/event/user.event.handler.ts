@@ -1,15 +1,12 @@
-import { EamilService } from './../email/email.service';
-import { TestEvent } from './test.event';
+import { EamilService } from '../../infra/adapter/email.service';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { UserCreateEvent } from './user.create.event';
+import { UserCreateEvent } from '../../domain/user.create.event';
 
-@EventsHandler(UserCreateEvent, TestEvent)
-export class UserEventHandler
-  implements IEventHandler<UserCreateEvent | TestEvent>
-{
+@EventsHandler(UserCreateEvent)
+export class UserEventHandler implements IEventHandler<UserCreateEvent> {
   constructor(private emailService: EamilService) {}
 
-  async handle(event: UserCreateEvent | TestEvent) {
+  async handle(event: UserCreateEvent) {
     switch (event.name) {
       case UserCreateEvent.name: {
         console.log('UserCreateEvnet !! ');
@@ -18,10 +15,6 @@ export class UserEventHandler
           email,
           signupVerifyToken,
         );
-        break;
-      }
-      case TestEvent.name: {
-        console.log('Test Event!!');
         break;
       }
       default:

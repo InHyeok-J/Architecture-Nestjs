@@ -1,30 +1,30 @@
-import { GetUserInfoQueryHandler } from './user.info.query.handler';
-import { VerifyEmailHandler } from './command/verify.email.handler';
-import { CreateUserHandler } from './command/create.user.handler';
-import { UserEntity } from './user.entity';
-import { EmailModule } from './../email/email.module';
-import { UsersController } from './users.controller';
+import { EamilService } from './infra/adapter/email.service';
+import { VerifyEmailHandler } from './application/command/verify.email.handler';
+import { CreateUserHandler } from './application/command/create.user.handler';
+import { UsersController } from './interface/users.controller';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 import { CqrsModule } from '@nestjs/cqrs';
-import { LoginHandler } from './command/login.handler';
-import { UserEventHandler } from './user.event.handler';
+import { LoginHandler } from './application/command/login.handler';
+import { UserEventHandler } from './application/event/user.event.handler';
+import { UserEntity } from './infra/db/user.entity';
+import { GetUserInfoHandler } from './application/query/get.user.info.handler';
+import { UserRepositoryImpl } from './infra/db/user.repository.impl';
+import { UserEntityMapper } from './infra/db/user.entity.mapper';
 
 @Module({
-  imports: [
-    CqrsModule,
-    TypeOrmModule.forFeature([UserEntity]),
-    EmailModule,
-    AuthModule,
-  ],
+  imports: [CqrsModule, TypeOrmModule.forFeature([UserEntity]), AuthModule],
   controllers: [UsersController],
   providers: [
     CreateUserHandler,
     VerifyEmailHandler,
     LoginHandler,
     UserEventHandler,
-    GetUserInfoQueryHandler,
+    GetUserInfoHandler,
+    EamilService,
+    { provide: 'UserRepository', useClass: UserRepositoryImpl },
+    UserEntityMapper,
   ],
 })
 export class UsersModule {}

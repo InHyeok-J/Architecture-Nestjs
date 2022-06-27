@@ -1,15 +1,13 @@
 import { HttpException } from '@nestjs/common';
-import { GetUserInfoQuery } from './query/user.info.query';
+import { GetUserInfoQuery } from './get.user.info.query';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
-import { UserInfo } from './dto/UserInfo';
+import { UserInfo } from '../../interface/UserInfo';
+import { UserEntity } from 'src/users/infra/db/user.entity';
 
 @QueryHandler(GetUserInfoQuery)
-export class GetUserInfoQueryHandler
-  implements IQueryHandler<GetUserInfoQuery>
-{
+export class GetUserInfoHandler implements IQueryHandler<GetUserInfoQuery> {
   constructor(
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,

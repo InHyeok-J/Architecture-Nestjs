@@ -1,4 +1,3 @@
-import { UserEntity } from './../users/user.entity';
 import { ConfigType } from '@nestjs/config';
 import { Inject, Injectable, HttpException } from '@nestjs/common';
 import authConfig from 'src/config/auth.config';

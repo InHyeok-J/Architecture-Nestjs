@@ -1,9 +1,9 @@
-import { GetUserInfoQuery } from './query/user.info.query';
-import { LoginCommand } from './command/login.command';
-import { VerifyEmailCommand } from './command/verify.email.command';
-import { CreateUserCommand } from './command/create.user.command';
-import { RequestUserData } from './request.user.decorator';
-import { AuthGuard } from './../auth/auth.guard';
+import { GetUserInfoQuery } from '../application/query/get.user.info.query';
+import { LoginCommand } from '../application/command/login.command';
+import { VerifyEmailCommand } from '../application/command/verify.email.command';
+import { CreateUserCommand } from '../application/command/create.user.command';
+import { RequestUserData } from '../common/request.user.decorator';
+import { AuthGuard } from '../../auth/auth.guard';
 import { UserLoginDto } from './dto/user-login.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -16,7 +16,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { UserInfo } from './dto/UserInfo';
+import { UserInfo } from './UserInfo';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 @Controller('users')
 export class UsersController {
